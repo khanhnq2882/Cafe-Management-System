@@ -8,7 +8,10 @@ import project.cms.cafemanagementsystem.constants.CafeConstants;
 import project.cms.cafemanagementsystem.rest.UserRest;
 import project.cms.cafemanagementsystem.service.UserService;
 import project.cms.cafemanagementsystem.utils.CafeUtils;
+import project.cms.cafemanagementsystem.wrapper.UserWrapper;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 @RestController
@@ -33,6 +36,26 @@ public class UserRestImpl implements UserRest {
             return userService.login(requestMap);
         }catch (Exception ex){
            ex.printStackTrace();
+        }
+        return CafeUtils.getResponseEntity(CafeConstants.SOMETHING_WENT_WRONG, HttpStatus.INTERNAL_SERVER_ERROR);
+    }
+
+    @Override
+    public ResponseEntity<List<UserWrapper>> getAllUser() {
+        try{
+            return userService.getAllUser();
+        }catch (Exception ex){
+            ex.printStackTrace();
+        }
+        return new ResponseEntity<List<UserWrapper>>(new ArrayList<>(), HttpStatus.INTERNAL_SERVER_ERROR);
+    }
+
+    @Override
+    public ResponseEntity<String> updateUser(Map<String, String> requestMap) {
+        try{
+            return userService.updateUser(requestMap);
+        }catch (Exception ex){
+            ex.printStackTrace();
         }
         return CafeUtils.getResponseEntity(CafeConstants.SOMETHING_WENT_WRONG, HttpStatus.INTERNAL_SERVER_ERROR);
     }

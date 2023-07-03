@@ -11,12 +11,14 @@ import org.springframework.stereotype.Service;
 import project.cms.cafemanagementsystem.constants.CafeConstants;
 import project.cms.cafemanagementsystem.entity.User;
 import project.cms.cafemanagementsystem.jwt.CustomerUsersDetailsService;
+import project.cms.cafemanagementsystem.jwt.JwtFilter;
 import project.cms.cafemanagementsystem.jwt.JwtUtil;
 import project.cms.cafemanagementsystem.repository.UserRepository;
 import project.cms.cafemanagementsystem.service.UserService;
 import project.cms.cafemanagementsystem.utils.CafeUtils;
-import java.util.Map;
-import java.util.Objects;
+import project.cms.cafemanagementsystem.wrapper.UserWrapper;
+
+import java.util.*;
 
 @Slf4j
 @Service
@@ -33,6 +35,9 @@ public class UserServiceImpl implements UserService {
 
     @Autowired
     private JwtUtil jwtUtil;
+
+    @Autowired
+    JwtFilter jwtFilter;
 
     @Override
     public ResponseEntity<String> signUp(Map<String, String> requestMap) {
@@ -79,6 +84,47 @@ public class UserServiceImpl implements UserService {
         return new ResponseEntity<String>("{\"message\":\"Bad credentials"+"\"}",
                 HttpStatus.BAD_REQUEST);
     }
+
+    @Override
+    public ResponseEntity<List<UserWrapper>> getAllUser() {
+        try{
+            if(jwtFilter.isAdmin()){
+                return new ResponseEntity<>(userRepository.getAllUser(), HttpStatus.OK);
+            }else{
+                return new ResponseEntity<>(new ArrayList<>(), HttpStatus.UNAUTHORIZED);
+            }
+        }catch (Exception ex){
+            ex.printStackTrace();
+        }
+        return new ResponseEntity<>(new ArrayList<>(), HttpStatus.INTERNAL_SERVER_ERROR);
+    }
+
+    @Override
+    public ResponseEntity<String> updateUser(Map<String, String> requestMap) {
+        try{
+            if(jwtFilter.isAdmin()){
+               Optional<User> user = userRepository.findById(Integer.parseInt(requestMap.get("id")));
+               if(!user.isEmpty()){
+                   userRepository.updateStatus(requestMap.get("status"), Integer.parseInt(requestMap.get("id")));
+                   sendMailToAllAdmin(requestMap.get("status"), user.get().getEmail(), userRepository.getAllAdmin());
+                   return CafeUtils.getResponseEntity("User status updated successfully!", HttpStatus.OK);
+               }else{
+                   CafeUtils.getResponseEntity("User is not exist", HttpStatus.OK);
+               }
+
+            }else{
+                return CafeUtils.getResponseEntity(CafeConstants.UNAUTHORIZED_ACCESS, HttpStatus.UNAUTHORIZED);
+            }
+        }catch (Exception ex){
+            ex.printStackTrace();
+        }
+        return CafeUtils.getResponseEntity(CafeConstants.SOMETHING_WENT_WRONG, HttpStatus.INTERNAL_SERVER_ERROR);
+    }
+
+    private void sendMailToAllAdmin(String status, String email, List<UserWrapper> allAdmin) {
+
+    }
+
 
     private boolean validateSignUpMap(Map<String, String> requestMap){
         if(requestMap.containsKey("name") && requestMap.containsKey("contactNumber")
