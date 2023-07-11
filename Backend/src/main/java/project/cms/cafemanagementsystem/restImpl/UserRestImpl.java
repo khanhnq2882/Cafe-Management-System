@@ -5,6 +5,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RestController;
 import project.cms.cafemanagementsystem.constants.CafeConstants;
+import project.cms.cafemanagementsystem.jwt.JwtFilter;
 import project.cms.cafemanagementsystem.rest.UserRest;
 import project.cms.cafemanagementsystem.service.UserService;
 import project.cms.cafemanagementsystem.utils.CafeUtils;
@@ -19,6 +20,9 @@ public class UserRestImpl implements UserRest {
 
     @Autowired
     private UserService userService;
+
+    @Autowired
+    private JwtFilter jwtFilter;
 
     @Override
     public ResponseEntity<String> signUp(Map<String, String> requestMap) {

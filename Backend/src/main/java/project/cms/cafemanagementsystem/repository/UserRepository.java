@@ -15,7 +15,7 @@ public interface UserRepository extends JpaRepository<User, Integer> {
 
     List<UserWrapper> getAllUser();
 
-    List<UserWrapper> getAllAdmin();
+    List<String> getAllAdmin();
 
     @Transactional
     @Modifying

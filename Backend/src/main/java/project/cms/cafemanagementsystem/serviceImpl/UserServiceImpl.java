@@ -16,6 +16,7 @@ import project.cms.cafemanagementsystem.jwt.JwtUtil;
 import project.cms.cafemanagementsystem.repository.UserRepository;
 import project.cms.cafemanagementsystem.service.UserService;
 import project.cms.cafemanagementsystem.utils.CafeUtils;
+import project.cms.cafemanagementsystem.utils.EmailUtils;
 import project.cms.cafemanagementsystem.wrapper.UserWrapper;
 
 import java.util.*;
@@ -37,7 +38,10 @@ public class UserServiceImpl implements UserService {
     private JwtUtil jwtUtil;
 
     @Autowired
-    JwtFilter jwtFilter;
+    private JwtFilter jwtFilter;
+
+    @Autowired
+    private EmailUtils emailUtils;
 
     @Override
     public ResponseEntity<String> signUp(Map<String, String> requestMap) {
@@ -111,7 +115,6 @@ public class UserServiceImpl implements UserService {
                }else{
                    CafeUtils.getResponseEntity("User is not exist", HttpStatus.OK);
                }
-
             }else{
                 return CafeUtils.getResponseEntity(CafeConstants.UNAUTHORIZED_ACCESS, HttpStatus.UNAUTHORIZED);
             }
@@ -121,10 +124,14 @@ public class UserServiceImpl implements UserService {
         return CafeUtils.getResponseEntity(CafeConstants.SOMETHING_WENT_WRONG, HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
-    private void sendMailToAllAdmin(String status, String email, List<UserWrapper> allAdmin) {
-
+    private void sendMailToAllAdmin(String status, String user, List<String> allAdmin) {
+        allAdmin.remove(jwtFilter.getCurrentUser());
+        if(status != null && status.equalsIgnoreCase("true")){
+            emailUtils.sendSimpleMessage(jwtFilter.getCurrentUser(), "Account Approved", "USER:-"+user+" \n is approved by \nADMIN:-"+jwtFilter.getCurrentUser(), allAdmin);
+        }else{
+            emailUtils.sendSimpleMessage(jwtFilter.getCurrentUser(), "Account Rejected", "USER:-"+user+" \n is rejected by \nADMIN:-"+jwtFilter.getCurrentUser(), allAdmin);
+        }
     }
-
 
     private boolean validateSignUpMap(Map<String, String> requestMap){
         if(requestMap.containsKey("name") && requestMap.containsKey("contactNumber")
