@@ -1,0 +1,50 @@
+<div class="container">
+  <div class="card col-6" style="position: absolute;left: 25%;top: 25%;">
+    <h4 class="card-header">Signup</h4>
+    <div class="card-body">
+      <form [formGroup]="signUpForm">
+        <div class="mb-3">
+          <label class="form-label">Your Name</label>
+          <input
+            type="text"
+            class="form-control"
+            aria-label="name"
+            formControlName="name"
+          />
+        </div>
+        <div class="mb-3">
+          <label class="form-label">Email</label>
+          <input
+            type="text"
+            class="form-control"
+            aria-label="email"
+            formControlName="email"
+          />
+        </div>
+        <div class="mb-3">
+          <label class="form-label">Password</label>
+          <input
+            type="password"
+            class="form-control"
+            aria-label="Password"
+            formControlName="password"
+          />
+        </div>
+        <div class="mb-3">
+          <label class="form-label">Contact Number</label>
+          <input
+            type="text"
+            class="form-control"
+            aria-label="contactNumber"
+            formControlName="contactNumber"
+          />
+        </div>
+        <div>
+          <button class="btn btn-primary" type="submit" (click)="signUp()">
+            Button
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
