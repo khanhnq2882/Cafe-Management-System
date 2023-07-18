@@ -1,49 +1,69 @@
 <div class="container">
-  <div class="card col-6" style="position: absolute;left: 25%;top: 25%;">
+  <div class="card col-6" style="position: absolute; left: 25%; top: 25%">
     <h4 class="card-header">Signup</h4>
     <div class="card-body">
-      <form [formGroup]="signUpForm">
-        <div class="mb-3">
-          <label class="form-label">Your Name</label>
+      <form
+        name="form"
+        #f="ngForm"
+        *ngIf="!isSuccessful"
+        (ngSubmit)="f.form.valid && onSubmit()"
+      >
+        <div class="form-group">
+          <label for="name">Your name</label>
           <input
             type="text"
             class="form-control"
-            aria-label="name"
-            formControlName="name"
+            id="name"
+            placeholder="Enter your name"
+            required
+            [(ngModel)]="signUpForm.name"
+            name="name"
           />
         </div>
-        <div class="mb-3">
-          <label class="form-label">Email</label>
+        <br />
+
+        <div class="form-group">
+          <label for="email">Email</label>
           <input
-            type="text"
+            type="email"
             class="form-control"
-            aria-label="email"
-            formControlName="email"
+            id="email"
+            placeholder="Enter your email"
+            required
+            [(ngModel)]="signUpForm.email"
+            name="email"
           />
         </div>
-        <div class="mb-3">
-          <label class="form-label">Password</label>
+        <br />
+
+        <div class="form-group">
+          <label for="password">Password</label>
           <input
             type="password"
             class="form-control"
-            aria-label="Password"
-            formControlName="password"
+            id="password"
+            placeholder="Enter your password"
+            required
+            [(ngModel)]="signUpForm.password"
+            name="password"
           />
         </div>
-        <div class="mb-3">
-          <label class="form-label">Contact Number</label>
+        <br />
+
+        <div class="form-group">
+          <label for="contactNumber">Contact Number</label>
           <input
             type="text"
             class="form-control"
-            aria-label="contactNumber"
-            formControlName="contactNumber"
+            id="contactNumber"
+            placeholder="Enter your contact number"
+            required
+            [(ngModel)]="signUpForm.contactNumber"
+            name="contactNumber"
           />
         </div>
-        <div>
-          <button class="btn btn-primary" type="submit" (click)="signUp()">
-            Button
-          </button>
-        </div>
+        <br />
+        <button type="submit" class="btn btn-primary">Sign Up</button>
       </form>
     </div>
   </div>
