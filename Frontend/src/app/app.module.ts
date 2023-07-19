@@ -4,8 +4,9 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { RegisterComponent } from './register/register.component';
+import { SignupComponent } from './signup/signup.component';
 import { AuthService } from './services/auth.service';
+import { RegisterComponent } from './register/register.component';
 import { LoginComponent } from './login/login.component';
 
 
@@ -20,7 +21,7 @@ import { LoginComponent } from './login/login.component';
     AppRoutingModule, 
     ReactiveFormsModule,
     FormsModule,
-    HttpClientModule,
+    HttpClientModule
   ],
   providers: [AuthService],
   bootstrap: [AppComponent]
