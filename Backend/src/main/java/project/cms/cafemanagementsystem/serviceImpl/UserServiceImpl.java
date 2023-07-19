@@ -44,10 +44,10 @@ public class UserServiceImpl implements UserService {
     private EmailUtils emailUtils;
 
     @Override
-    public ResponseEntity<String> signUp(Map<String, String> requestMap) {
-        log.info("Inside signup {}", requestMap);
+    public ResponseEntity<String> register(Map<String, String> requestMap) {
+        log.info("Inside register {}", requestMap);
         try{
-            if(validateSignUpMap(requestMap)){
+            if(validateRegisterMap(requestMap)){
                 User user = userRepository.findByEmailId(requestMap.get("email"));
                 if(Objects.isNull(user)){
                     userRepository.save(getUserFromMap(requestMap));
@@ -133,7 +133,7 @@ public class UserServiceImpl implements UserService {
         }
     }
 
-    private boolean validateSignUpMap(Map<String, String> requestMap){
+    private boolean validateRegisterMap(Map<String, String> requestMap){
         if(requestMap.containsKey("name") && requestMap.containsKey("contactNumber")
                 && requestMap.containsKey("email") && requestMap.containsKey("password")){
             return true;

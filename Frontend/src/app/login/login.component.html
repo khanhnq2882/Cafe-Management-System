@@ -1,0 +1,60 @@
+<div class="container">
+    <div class="card col-6" style="position: absolute; left: 25%; top: 25%">
+      <h4 class="card-header">Login</h4>
+      <div class="card-body">
+        <form
+          #loginForm="ngForm"
+          *ngIf="!isSuccessful"
+          (ngSubmit)="loginForm.form.valid && onSubmit()"
+        >
+          <div class="form-group">
+            <label for="email">Email</label>
+            <input
+              type="email"
+              class="form-control"
+              id="email"
+              placeholder="Enter your email"
+              ngModel
+              name="email"
+            />
+          </div>
+          <br />
+          <div
+            class="alert alert-danger"
+            role="alert"
+            *ngIf="
+            loginForm.controls['email']?.dirty &&
+            loginForm.controls['email']?.errors
+            "
+          >
+            Email must be a valid email!
+          </div>
+  
+          <div class="form-group">
+            <label for="password">Password</label>
+            <input
+              type="password"
+              class="form-control"
+              id="password"
+              placeholder="Enter your password"
+              ngModel
+              name="password"
+            />
+          </div>
+          <br />
+          <div
+            class="alert alert-danger"
+            role="alert"
+            *ngIf="
+            loginForm.controls['password']?.dirty &&
+            loginForm.controls['password']?.errors
+            "
+          >
+            Password must be 8-25 characters and contain at least one number letter and special character!
+          </div>
+          <button type="submit" class="btn btn-primary" >Login</button>
+        </form>
+      </div>
+    </div>
+  </div>
+  

@@ -9,9 +9,14 @@ export class AuthService{
 
     constructor(private httpClient: HttpClient){}
 
-    public signUp(requestData: { [key: string]: string }) : Observable<string>{
-        return this.httpClient.post<string>(`${this.apiServerUrl}/user/signup`, requestData);
+    public register(requestData: { [key: string]: string }) : Observable<string>{
+        return this.httpClient.post<string>(`${this.apiServerUrl}/user/register`, requestData);
     }
 
+    public login(requestData: { [key: string]: string }) : Observable<string>{
+        return this.httpClient.post<string>(`${this.apiServerUrl}/user/login`, requestData);
+    }
+
+   
    
 }
