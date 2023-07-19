@@ -1,0 +1,106 @@
+<div class="container">
+  <div class="card col-6" style="position: absolute; left: 25%; top: 25%">
+    <h4 class="card-header">Register</h4>
+    <div class="card-body">
+      <form
+        #registerForm="ngForm"
+        *ngIf="!isSuccessful"
+        (ngSubmit)="registerForm.form.valid && onSubmit()"
+      >
+        <div class="form-group">
+          <label for="name">Your name</label>
+          <input
+            type="text"
+            class="form-control"
+            id="name"
+            placeholder="Enter your name"
+            ngModel
+            name="name"
+          />
+        </div>
+        <br />
+
+        <div class="form-group">
+          <label for="email">Email</label>
+          <input
+            type="email"
+            class="form-control"
+            id="email"
+            placeholder="Enter your email"
+            ngModel
+            name="email"
+          />
+        </div>
+        <br />
+        <div
+          class="alert alert-danger"
+          role="alert"
+          *ngIf="
+            registerForm.controls['email']?.dirty &&
+            registerForm.controls['email']?.errors
+          "
+        >
+          Email must be a valid email!
+        </div>
+
+        <div class="form-group">
+          <label for="password">Password</label>
+          <input
+            type="password"
+            class="form-control"
+            id="password"
+            placeholder="Enter your password"
+            ngModel
+            name="password"
+          />
+        </div>
+        <br />
+        <div
+          class="alert alert-danger"
+          role="alert"
+          *ngIf="
+            registerForm.controls['password']?.dirty &&
+            registerForm.controls['password']?.errors
+          "
+        >
+          Password must be 8-25 characters and contain at least one number
+          letter and special character!
+        </div>
+
+        <div class="form-group">
+          <label for="contactNumber">Contact Number</label>
+          <input
+            type="text"
+            class="form-control"
+            id="contactNumber"
+            placeholder="Enter your contact number"
+            ngModel
+            name="contactNumber"
+          />
+        </div>
+        <div
+          class="alert alert-danger"
+          role="alert"
+          *ngIf="
+            registerForm.controls['contactNumber']?.dirty &&
+            registerForm.controls['contactNumber']?.errors
+          "
+        >
+          Contact number is not valid!
+        </div>
+        <br />
+        <button
+          type="submit"
+          class="btn btn-primary"
+          [disabled]="registerButtonDisabled()"
+        >
+          Register
+        </button>
+      </form>
+      <br />
+      <div class="alert alert-success" role="alert" *ngIf="isSuccessful">
+        Register new account successfully!
+      </div>
+    </div>
+  </div>
+</div>

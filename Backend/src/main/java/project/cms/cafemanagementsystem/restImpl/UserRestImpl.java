@@ -25,9 +25,9 @@ public class UserRestImpl implements UserRest {
     private JwtFilter jwtFilter;
 
     @Override
-    public ResponseEntity<String> signUp(Map<String, String> requestMap) {
+    public ResponseEntity<String> register(Map<String, String> requestMap) {
         try {
-            return userService.signUp(requestMap);
+            return userService.register(requestMap);
         }catch (Exception ex){
             ex.printStackTrace();
         }
