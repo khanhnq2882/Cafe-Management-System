@@ -1,4 +1,4 @@
-package project.cms.cafemanagementsystem.jwt;
+package project.cms.cafemanagementsystem.config;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,21 +18,21 @@ public class CustomerUsersDetailsService implements UserDetailsService {
     @Autowired
     private UserRepository userRepository;
 
-    private User userDetail;
+    private User user;
 
+    private org.springframework.security.core.userdetails.User userDetails;
 
     @Override
-    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        log.info("Inside loadUserByUsername {}", username);
-        userDetail = userRepository.findByEmailId(username);
-        if(!Objects.isNull(userDetail)){
-            return new org.springframework.security.core.userdetails.User(userDetail.getEmail(), userDetail.getPassword(), new ArrayList<>());
+    public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
+        user = userRepository.findUserByEmail(email);
+        if(!Objects.isNull(user)){
+            return new org.springframework.security.core.userdetails.User(user.getEmail(), user.getPassword(), new ArrayList<>());
         }else{
-            throw new UsernameNotFoundException("User not found!");
+            throw new UsernameNotFoundException("User is not found!");
         }
     }
 
-    public User getUserDetail(){
-        return userDetail;
+    public User getCurrentUser(){
+        return user;
     }
 }

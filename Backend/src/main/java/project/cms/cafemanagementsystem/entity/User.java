@@ -6,13 +6,11 @@ import org.hibernate.annotations.DynamicInsert;
 import org.hibernate.annotations.DynamicUpdate;
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.HashSet;
+import java.util.Set;
 
 @Data
 @Entity
-@NamedQuery(name = "User.findByEmailId", query = "select u from User u where u.email = :email")
-@NamedQuery(name = "User.getAllUser", query = "select new project.cms.cafemanagementsystem.wrapper.UserWrapper(u.id, u.name, u.email, u.contactNumber, u.status) from User u where u.role = 'user'")
-@NamedQuery(name = "User.updateStatus", query = "update User u set u.status = :status where u.id = :id")
-@NamedQuery(name = "User.getAllAdmin", query = "select u.email from User u where u.role = 'admin'")
 @DynamicInsert
 @DynamicUpdate
 @Getter
@@ -30,8 +28,8 @@ public class User implements Serializable {
     @Column(name = "name")
     private String name;
 
-    @Column(name = "contactNumber")
-    private String contactNumber;
+    @Column(name = "phoneNumber")
+    private String phoneNumber;
 
     @Column(name = "email")
     private String email;
@@ -42,7 +40,10 @@ public class User implements Serializable {
     @Column(name = "status")
     private String status;
 
-    @Column(name = "role")
-    private String role;
+    @ManyToMany(fetch = FetchType.LAZY)
+    @JoinTable(name = "user_role",
+            joinColumns = @JoinColumn(name = "userId"),
+            inverseJoinColumns = @JoinColumn(name = "roleId"))
+    private Set<Role> roles = new HashSet<>();
 
 }

@@ -7,4 +7,8 @@ public class CafeConstants {
     public static final String INVALID_DATA = "Invalid data!";
 
     public static final String UNAUTHORIZED_ACCESS = "Unauthorized access!";
+
+    public static final String EMAIL_EXISTED = "Email is already existed!";
+
+    public static final String PHONE_NUMBER_EXISTED = "Phone number is already existed!";
 }
