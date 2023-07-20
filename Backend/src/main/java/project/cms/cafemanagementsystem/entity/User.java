@@ -1,6 +1,7 @@
 package project.cms.cafemanagementsystem.entity;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.*;
 import org.hibernate.annotations.DynamicInsert;
 import org.hibernate.annotations.DynamicUpdate;
@@ -44,5 +45,9 @@ public class User implements Serializable {
 
     @Column(name = "role")
     private String role;
+
+    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @JsonIgnoreProperties(value = {"hibernateLazyInitializer", "handler"}, allowSetters = true)
+    private Address address;
 
 }
