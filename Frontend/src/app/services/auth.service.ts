@@ -17,6 +17,10 @@ export class AuthService{
         return this.httpClient.post<string>(`${this.apiServerUrl}/user/login`, requestData);
     }
 
+    public forgotPassword(requestData: { [key: string]: string }) : Observable<string>{
+        return this.httpClient.post<string>(`${this.apiServerUrl}/user/forgot-password`, requestData);
+    }
+
    
    
 }
