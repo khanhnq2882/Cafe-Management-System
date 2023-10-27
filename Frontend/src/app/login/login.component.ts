@@ -2,6 +2,7 @@ import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
 import { NgForm, Validators } from '@angular/forms';
 import { AuthService } from '../services/auth.service';
 import { StorageService } from '../services/storage.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-login',
@@ -15,8 +16,9 @@ export class LoginComponent implements OnInit, AfterViewInit{
   isLoginFailed = false;
   isLoggedIn = false;
   errorMessage = '';
+  role : string = '';
 
-  constructor(private authService: AuthService, private storageService: StorageService){
+  constructor(private authService: AuthService, private storageService: StorageService, private router: Router){
   }
   ngAfterViewInit(): void {
     setTimeout(() => {
@@ -35,7 +37,9 @@ export class LoginComponent implements OnInit, AfterViewInit{
   }
 
   ngOnInit(): void {
-    
+    if (this.storageService.isLoggedIn()) {
+      this.isLoggedIn = true;
+    }
   }
 
   onSubmit(){
@@ -43,6 +47,7 @@ export class LoginComponent implements OnInit, AfterViewInit{
       email: this.loginForm.value.email,
       password: this.loginForm.value.password,
     };
+    
     console.log(this.loginForm.value);
     this.authService.login(requestData).subscribe({
       next: data =>{
@@ -50,15 +55,15 @@ export class LoginComponent implements OnInit, AfterViewInit{
         this.storageService.saveUser(data);
         this.isLoginFailed = false;
         this.isLoggedIn = true;
-        // this.reloadPage();
+        console.log(this.storageService.getUserInfo());
       },
       error: err => {
         this.errorMessage = err.error.message;
         this.isLoginFailed = true;
+        alert(this.errorMessage);
       }
 
     });
-
   }
 
   // private isButtonDisabled = false;

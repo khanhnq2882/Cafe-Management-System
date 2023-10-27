@@ -32,5 +32,15 @@ public class EmailUtils {
         return cc;
     }
 
+    public void sendRandomPasswordToEmail(String to, String subject, String text){
+        SimpleMailMessage message = new SimpleMailMessage();
+        message.setFrom("quockhanhnguyen2882@gmail.com");
+        message.setTo(to);
+        message.setSubject(subject);
+        message.setText(text);
+        emailSender.send(message);
+    }
+
+
 
 }

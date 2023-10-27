@@ -6,7 +6,7 @@ export class StorageService {
 
   constructor() { }
 
-  lean(): void {
+  clean(): void {
     window.sessionStorage.clear();
   }
 
@@ -29,8 +29,19 @@ export class StorageService {
     if (user) {
       return true;
     }
-
     return false;
   }
+
+  public getUserInfo() : any{
+    let payload;
+    const token = window.sessionStorage.getItem('auth-user');
+    if (token) {
+      payload = window.atob(token?.split('.')[1]!);
+      return JSON.parse(payload);
+    } else {
+      return null;
+    }
+  }
+
   
 }
