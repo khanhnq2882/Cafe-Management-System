@@ -17,13 +17,13 @@ import java.io.IOException;
 
 @Component
 public class JwtFilter extends OncePerRequestFilter {
-
-    @Autowired
     private JwtUtil jwtUtil;
-
-    @Autowired
     private CustomerUsersDetailsService customerUsersDetailsService;
-
+    @Autowired
+    public JwtFilter(JwtUtil jwtUtil, CustomerUsersDetailsService customerUsersDetailsService) {
+        this.jwtUtil = jwtUtil;
+        this.customerUsersDetailsService = customerUsersDetailsService;
+    }
     Claims claims = null;
     private String userName = null;
 

@@ -14,12 +14,12 @@ import java.util.Objects;
 @Service
 @Slf4j
 public class CustomerUsersDetailsService implements UserDetailsService {
-
-    @Autowired
     private UserRepository userRepository;
-
+    @Autowired
+    public CustomerUsersDetailsService(UserRepository userRepository) {
+        this.userRepository = userRepository;
+    }
     private User userDetail;
-
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {

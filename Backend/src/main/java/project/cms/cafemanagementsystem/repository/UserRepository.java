@@ -5,7 +5,7 @@ import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.repository.query.Param;
 import org.springframework.transaction.annotation.Transactional;
 import project.cms.cafemanagementsystem.entity.User;
-import project.cms.cafemanagementsystem.wrapper.UserWrapper;
+import project.cms.cafemanagementsystem.dto.UserDTO;
 
 import java.util.List;
 
@@ -13,7 +13,7 @@ public interface UserRepository extends JpaRepository<User, Integer> {
 
     User findByEmail(@Param("email") String email);
 
-    List<UserWrapper> getAllUser();
+    List<UserDTO> getAllUser();
 
     List<String> getAllAdmin();
 

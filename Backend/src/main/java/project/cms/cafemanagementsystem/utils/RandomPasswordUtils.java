@@ -14,7 +14,6 @@ public class RandomPasswordUtils {
                 password.append(ch);
             }
         }
-
         return password.toString();
     }
 
@@ -43,10 +42,6 @@ public class RandomPasswordUtils {
     public boolean isSpecialCharacter(char ch) {
         String specialCharacters = " !\"#$%&'()*+,-./:;<=>?@\\[\\\\\\]^_`{|}~";
         return specialCharacters.contains(String.valueOf(ch));
-    }
-
-    public static void main(String[] args) {
-
     }
 
 }

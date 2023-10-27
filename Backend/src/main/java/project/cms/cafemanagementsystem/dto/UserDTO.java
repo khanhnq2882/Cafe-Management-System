@@ -1,4 +1,4 @@
-package project.cms.cafemanagementsystem.wrapper;
+package project.cms.cafemanagementsystem.dto;
 
 import lombok.*;
 
@@ -7,7 +7,7 @@ import lombok.*;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class UserWrapper {
+public class UserDTO {
 
     private Integer id;
 
